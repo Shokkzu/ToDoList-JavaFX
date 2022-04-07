@@ -1,4 +1,4 @@
-package me.kyllian.todolistjavafx;
+package me.kyllian.todolistjavafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
