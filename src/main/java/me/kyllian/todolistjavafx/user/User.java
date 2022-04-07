@@ -17,7 +17,7 @@ public class User {
         setPrenom(prenom);
         setEmail(email);
         setMdp(mdp);
-        Inscription(BDD);
+        inscription(BDD);
     }
 
     public User(String email, String mdp){
@@ -25,7 +25,7 @@ public class User {
         setMdp(mdp);
     }
 
-    public void Inscription(BDD BDD) throws SQLException {
+    public void inscription(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("INSERT INTO compte(nom, prenom, email, mdp) VALUES (?,?,?,?)");
         req.setString(1,nom);
         req.setString(2,prenom);
@@ -34,7 +34,7 @@ public class User {
         req.executeUpdate();
     }
 
-    public boolean Connexion(BDD BDD) throws SQLException {
+    public boolean connexion(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM compte WHERE email = ? AND mdp = ?");
         req.setString(1,email);
         req.setString(2,mdp);
@@ -51,7 +51,7 @@ public class User {
         }
     }
 
-    public void Modification(BDD BDD) throws SQLException {
+    public void modification(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("UPDATE compte SET nom = ?, prenom = ?, email = ?, mdp = ? WHERE id_compte = ?");
         req.setString(1,nom);
         req.setString(2,prenom);
@@ -61,7 +61,7 @@ public class User {
         req.executeUpdate();
     }
 
-    public void Suppression(BDD BDD) throws SQLException {
+    public void suppression(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("DELETE FROM compte WHERE id_compte = ?");
         req.setInt(1, id_compte);
         req.executeUpdate();

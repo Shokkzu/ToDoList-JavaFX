@@ -1,8 +1,12 @@
 package me.kyllian.todolistjavafx.controller;
 
+import me.kyllian.todolistjavafx.BDD.BDD;
+import me.kyllian.todolistjavafx.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+
+import java.sql.SQLException;
 
 public class ConnexionController {
 
@@ -13,8 +17,8 @@ public class ConnexionController {
     private TextField passwordField;
 
     @FXML
-    void onConnexionButtonClick(ActionEvent event) {
-
+    void onConnexionButtonClick(ActionEvent event) throws SQLException {
+        User user = new User(mailField.getText(),passwordField.getText());
     }
 
     @FXML
