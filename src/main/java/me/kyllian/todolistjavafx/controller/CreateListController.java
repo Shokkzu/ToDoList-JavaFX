@@ -40,7 +40,6 @@ public class CreateListController {
             newList.create(new BDD());
             StartApplication.changeScene("liste", new ListeController(currentUser));
         }
-
     }
 
     @FXML

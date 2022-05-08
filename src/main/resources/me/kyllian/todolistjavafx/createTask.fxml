@@ -7,21 +7,51 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label alignment="CENTER" prefHeight="73.0" prefWidth="600.0" text="Créer une liste">
+        <Label alignment="CENTER" prefHeight="73.0" prefWidth="600.0" text="Créer une tache">
             <font>
                 <Font size="27.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Nom de la liste :" />
-        <TextField fx:id="listNameField" prefHeight="25.0" prefWidth="378.0">
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Nom de la taĉhe :" />
+        <TextField fx:id="nameField" prefHeight="25.0" prefWidth="378.0">
             <VBox.margin>
                 <Insets left="50.0" right="50.0" />
             </VBox.margin>
         </TextField>
-        <Label fx:id="errorText" textFill="RED" />
-        <Button fx:id="createList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCreate" text="Créer la liste">
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Description : " />
+      <TextField fx:id="descField" prefHeight="52.0" prefWidth="183.0">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Difficulté : " />
+      <TextField fx:id="diffField" prefHeight="25.0" prefWidth="378.0">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Début :" />
+      <TextField fx:id="ddebField" prefHeight="25.0" prefWidth="378.0">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Fin :" />
+      <TextField fx:id="dfinField" prefHeight="25.0" prefWidth="378.0">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Butoir :" />
+      <TextField fx:id="dbutField" prefHeight="25.0" prefWidth="378.0">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin>
+      </TextField>
+        <Label fx:id="errorText" prefHeight="17.0" prefWidth="104.0" textFill="RED" />
+        <Button onAction="#onCreate" fx:id="createList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"  text="Créer la tâche">
             <VBox.margin>
                 <Insets left="1.0" right="1.0" top="5.0" />
             </VBox.margin>

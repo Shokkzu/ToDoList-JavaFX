@@ -55,7 +55,19 @@ public class Task {
         this.prenomgerant = prenomgerant;
     }
 
-    public Task(int ref_liste){
+
+
+    public Task(int ref_liste) {
+        this.ref_liste = ref_liste;
+    }
+
+    public Task(String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, int ref_liste) {
+        this.libelle = nom;
+        this.description= description;
+        this.difficulte = difficulte;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.date_butoir = date_butoir;
         this.ref_liste = ref_liste;
     }
 
@@ -93,41 +105,6 @@ public class Task {
         return mesListes;
     }
 
-    public void Affiche_All_Tache(BDD BDD) throws SQLException {
-        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM tache LEFT JOIN gere ON tache.id_tache = gere.ref_tache LEFT JOIN compte ON gere.ref_compte = compte.id_compte");
-        ResultSet monResultat = req.executeQuery();
-        while(monResultat.next()){
-            System.out.println("\n--------App Todo-List--------");
-            System.out.println("0.Tache numero : "+ monResultat.getInt("id_tache"));
-            System.out.println("1.libelle : "+monResultat.getString("libelle"));
-            System.out.println("2.description : "+monResultat.getString("description"));
-            System.out.println("3.difficulte : "+ monResultat.getInt("difficulte"));
-            System.out.println("4.date_debut : "+monResultat.getString("date_debut"));
-            System.out.println("5.date_fin : "+monResultat.getString("date_fin"));
-            System.out.println("6.date_butoir : "+monResultat.getString("date_butoir"));
-            System.out.println("7.Gere par : "+ monResultat.getInt("ref_compte"));
-        }
-    }
-
-    public void Assigner_tache(BDD BDD) throws SQLException {
-        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM gere WHERE ref_tache = ?");
-        req.setInt(1,ref_tache);
-        ResultSet monResulat = req.executeQuery();
-        if (monResulat.next()){
-            PreparedStatement req1 = BDD.getConnection().prepareStatement("UPDATE gere SET ref_tache = ?, ref_compte = ? WHERE ref_tache = ?");
-            req1.setInt(1,ref_tache);
-            req1.setInt(2,ref_compte);
-            req1.setInt(3,ref_tache);
-            req1.executeUpdate();
-        }
-        else{
-            PreparedStatement req2 = BDD.getConnection().prepareStatement("INSERT INTO gere(ref_tache,ref_compte) VALUES (?,?)");
-            req2.setInt(1,ref_tache);
-            req2.setInt(2,ref_compte);
-            req2.executeUpdate();
-        }
-    }
-
     public void delete(BDD bdd) throws SQLException {
         PreparedStatement maRequete = bdd.getConnection().prepareStatement("DELETE FROM liste WHERE id_liste=?");
         maRequete.setInt(1,this.id_tache);
@@ -157,6 +134,18 @@ public class Task {
             setDate_butoir(monResultat.getString(7));
         }
         System.out.println("Fin du filtrage");
+    }
+
+    public void create(BDD bdd) throws SQLException{
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("INSERT INTO tache(libelle,description,difficulte,date_debut,date_fin,date_butoir,ref_liste) VALUES (?,?,?,?,?,?,?)");
+        maRequete.setString(1, this.libelle);
+        maRequete.setString(2, this.description);
+        maRequete.setString(3, this.difficulte);
+        maRequete.setString(4, this.date_debut);
+        maRequete.setString(5, this.date_fin);
+        maRequete.setString(6, this.date_butoir);
+        maRequete.setInt(7, this.ref_liste);
+        maRequete.executeUpdate();
     }
 
     public void setId_tache(int id_tache) {

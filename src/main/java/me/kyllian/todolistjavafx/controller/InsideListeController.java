@@ -76,7 +76,7 @@ public class InsideListeController implements Initializable {
 
     @FXML
     void onCreate(ActionEvent event) {
-
+        StartApplication.changeScene("createTask",new CreateTaskController(checkedList,currentUser));
     }
 
     @FXML
