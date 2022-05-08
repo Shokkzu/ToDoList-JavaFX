@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox prefHeight="15.0" prefWidth="600.0">
+            <children>
+                <Button fx:id="retour" mnemonicParsing="false" onAction="#onReturn" prefHeight="25.0" prefWidth="100.0" text="Retour">
+                    <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+                <Label fx:id="connected" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="840.0" text="Connecté en tant que ---">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Label>
+            </children>
+        </HBox>
+        <Label fx:id="titreListe" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="1106.0" text="titreListe" textAlignment="CENTER">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <TableView onMouseClicked="#onRowClick" fx:id="tableTask" prefHeight="468.0" prefWidth="867.0">
+            <columns>
+                <TableColumn fx:id="taskName" prefWidth="149.0" text="Nom" />
+                <TableColumn fx:id="taskDesciption" minWidth="0.0" prefWidth="278.0" text="Description" />
+            <TableColumn fx:id="taskDifficulty" prefWidth="101.0" text="Difficulté" />
+            <TableColumn fx:id="dateDebut" prefWidth="91.0" text="Date Début" />
+            <TableColumn fx:id="dateFin" prefWidth="87.0" text="Date Fin" />
+            <TableColumn fx:id="dateButoir" prefWidth="112.0" text="Date Butoir" />
+            <TableColumn fx:id="taskType" minWidth="0.0" prefWidth="70.0" text="Type" />
+            <TableColumn fx:id="taskEtat" minWidth="0.0" prefWidth="63.0" text="État" />
+            </columns>
+        </TableView>
+        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="804.0" spacing="50.0">
+            <children>
+                <Button fx:id="createList" mnemonicParsing="false" onAction="#onCreate" prefHeight="25.0" prefWidth="138.0" text="Ajouter une tâche" />
+                <Button fx:id="modifyTask" mnemonicParsing="false" onAction="#onModify" prefHeight="25.0" prefWidth="143.0" text="Modifier une tâche" />
+                <Button fx:id="deleteTask" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="155.0" text="Supprimer une tâche" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

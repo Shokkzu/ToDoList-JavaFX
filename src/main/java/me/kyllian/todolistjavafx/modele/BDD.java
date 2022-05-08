@@ -1,4 +1,4 @@
-package me.kyllian.todolistjavafx.BDD;
+package me.kyllian.todolistjavafx.modele;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +8,8 @@ public class BDD {
     private final Connection cnx;
     public BDD() throws SQLException {
         cnx = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/app_todo-list?serverTimezone=UTC",
-                "root",
+                "jdbc:mysql://localhost:3306/kmn_apptodolist_javafx?serverTimezone=UTC",
+                "apptodolist",
                 "");
     }
 

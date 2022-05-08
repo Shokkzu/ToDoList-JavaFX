@@ -7,20 +7,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.kyllian.todolistjavafx.controller.ConnexionController">
+<VBox alignment="CENTER" prefHeight="361.0" prefWidth="331.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <Label text="Connexion">
       <font>
-         <Font size="24.0" />
+         <Font size="18.0" />
       </font>
    </Label>
+   <Label text="Nom :" />
+   <TextField fx:id="nom" />
+   <Label text="Prénom :" />
+   <TextField fx:id="prenom" />
    <Label text="Mail :" />
-   <TextField fx:id="mailField" />
+   <TextField fx:id="mail" />
    <Label text="Mot de passe :" />
-   <TextField fx:id="passwordField" />
+   <TextField fx:id="password" />
    <Label fx:id="errorText" textFill="RED" />
-    <Button onAction="#onConnexionButtonClick" text="Se Connecter" />
-   <Button onAction="#onInscriptionButtonClick" text="Inscription" />
+    <Button onAction="#onInscription" text="Inscription" />
+    <Button onAction="#onConnect" text="Se connecter" />
 </VBox>

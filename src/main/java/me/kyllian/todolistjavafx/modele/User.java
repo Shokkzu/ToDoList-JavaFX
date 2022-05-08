@@ -1,6 +1,6 @@
-package me.kyllian.todolistjavafx.user;
+package me.kyllian.todolistjavafx.modele;
 
-import me.kyllian.todolistjavafx.BDD.BDD;
+import me.kyllian.todolistjavafx.modele.BDD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +12,11 @@ public class User {
     private String email;
     private String mdp;
 
-    public User(String nom, String prenom, String email, String mdp,BDD BDD) throws SQLException {
+    public User(String nom, String prenom, String email, String mdp) throws SQLException {
         setNom(nom);
         setPrenom(prenom);
         setEmail(email);
         setMdp(mdp);
-        inscription(BDD);
     }
 
     public User(String email, String mdp){
@@ -25,8 +24,9 @@ public class User {
         setMdp(mdp);
     }
 
-    public void inscription(BDD BDD) throws SQLException {
-        PreparedStatement req = BDD.getConnection().prepareStatement("INSERT INTO compte(nom, prenom, email, mdp) VALUES (?,?,?,?)");
+    public void inscription(BDD bdd) throws SQLException {
+        bdd.getConnection().prepareStatement("ALTER TABLE user AUTO_INCREMENT = 1;").executeUpdate();
+        PreparedStatement req = bdd.getConnection().prepareStatement("INSERT INTO compte(nom, prenom, email, mdp) VALUES (?,?,?,?)");
         req.setString(1,nom);
         req.setString(2,prenom);
         req.setString(3,email);
@@ -34,21 +34,11 @@ public class User {
         req.executeUpdate();
     }
 
-    public boolean connexion(BDD BDD) throws SQLException {
-        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM compte WHERE email = ? AND mdp = ?");
-        req.setString(1,email);
-        req.setString(2,mdp);
-        ResultSet monResulat = req.executeQuery();
-        if (monResulat.next()){
-            setId_compte(monResulat.getInt(1));
-            setNom(monResulat.getString(2));
-            setPrenom(monResulat.getString(3));
-            setEmail(monResulat.getString(4));
-            setMdp(monResulat.getString(5));
-            return true;
-        } else {
-            return false;
-        }
+    public ResultSet connexion(BDD bdd) throws SQLException {
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT * FROM compte WHERE email=? AND mdp=?");
+        maRequete.setString(1,this.email);
+        maRequete.setString(2,this.mdp);
+        return maRequete.executeQuery();
     }
 
     public void modification(BDD BDD) throws SQLException {

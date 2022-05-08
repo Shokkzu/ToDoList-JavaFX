@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="15.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="disconnect" mnemonicParsing="false" onAction="#onDisconnect" prefHeight="25.0" prefWidth="100.0" text="Déconnexion">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Label fx:id="connected" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="486.0" text="Connecté en tant que ---">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="824.0" text="Listes de tâches :" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableList" onMouseClicked="#onRowClick" prefHeight="286.0" prefWidth="601.0">
+        <columns>
+          <TableColumn fx:id="listName" prefWidth="487.0" text="Nom de la liste" />
+          <TableColumn fx:id="listTaskCount" prefWidth="113.0" text="Nombre de tâches" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="601.0" spacing="50.0">
+         <children>
+            <Button fx:id="createList" mnemonicParsing="false" onAction="#onCreate" prefHeight="25.0" prefWidth="138.0" text="Créer une liste" />
+            <Button fx:id="checkList" mnemonicParsing="false" onAction="#onCheck" prefHeight="25.0" prefWidth="143.0" text="Accéder à la liste" />
+            <Button fx:id="deleteList" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="155.0" text="Supprimer la liste" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
