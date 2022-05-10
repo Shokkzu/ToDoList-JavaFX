@@ -2,18 +2,18 @@ package me.kyllian.todolistjavafx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import me.kyllian.todolistjavafx.StartApplication;
-import me.kyllian.todolistjavafx.modele.BDD;
-import me.kyllian.todolistjavafx.modele.List;
-import me.kyllian.todolistjavafx.modele.Task;
-import me.kyllian.todolistjavafx.modele.User;
+import me.kyllian.todolistjavafx.modele.*;
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class CreateTaskController {
+public class CreateTaskController implements Initializable {
     private List checkedList;
     private User currentUser;
     @FXML
@@ -48,19 +48,28 @@ public class CreateTaskController {
         this.currentUser = currentUser;
     }
 
-    void onCreate(ActionEvent event) throws SQLException {
+    @FXML
+    void onCreative(ActionEvent event){
         if (nameField.getText().isBlank()||nameField.getText().isBlank()||descField.getText().isBlank()||diffField.getText().isBlank()||ddebField.getText().isBlank()||dfinField.getText().isBlank()||dbutField.getText().isBlank()){
             errorText.setText("Veuillez remplir tous les champs");
         }else{
             Task newTask = new Task(nameField.getText(),descField.getText(),diffField.getText(),ddebField.getText(),dfinField.getText(),dbutField.getText(),checkedList.getIdListe());
-            newTask.create(new BDD());
+            try {
+                newTask.create(new BDD(), currentUser);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             StartApplication.changeScene("insideliste", new InsideListeController(currentUser, checkedList));
         }
-
     }
 
     @FXML
     void onReturn(ActionEvent event) {
         StartApplication.changeScene("liste", new ListeController(currentUser));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

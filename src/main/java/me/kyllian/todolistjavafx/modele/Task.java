@@ -3,6 +3,7 @@ package me.kyllian.todolistjavafx.modele;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Task {
@@ -136,8 +137,8 @@ public class Task {
         System.out.println("Fin du filtrage");
     }
 
-    public void create(BDD bdd) throws SQLException{
-        PreparedStatement maRequete = bdd.getConnection().prepareStatement("INSERT INTO tache(libelle,description,difficulte,date_debut,date_fin,date_butoir,ref_liste) VALUES (?,?,?,?,?,?,?)");
+    public void create(BDD bdd, User currentUser) throws SQLException{
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("INSERT INTO tache(libelle,description,difficulte,date_debut,date_fin,date_butoir,ref_liste) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         maRequete.setString(1, this.libelle);
         maRequete.setString(2, this.description);
         maRequete.setString(3, this.difficulte);
@@ -146,6 +147,12 @@ public class Task {
         maRequete.setString(6, this.date_butoir);
         maRequete.setInt(7, this.ref_liste);
         maRequete.executeUpdate();
+        ResultSet resultat = maRequete.getGeneratedKeys();
+        if (resultat.next()){
+            int id = resultat.getInt(1);
+            Gere newGere = new Gere(currentUser.getId_compte(), id);
+            newGere.createur(bdd);
+        }
     }
 
     public void setId_tache(int id_tache) {
