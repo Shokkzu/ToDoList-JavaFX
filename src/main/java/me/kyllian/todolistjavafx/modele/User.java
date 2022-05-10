@@ -19,6 +19,14 @@ public class User {
         setMdp(mdp);
     }
 
+    public User(int id_compte, String nom, String prenom, String email, String mdp) throws SQLException {
+        setId_compte(id_compte);
+        setNom(nom);
+        setPrenom(prenom);
+        setEmail(email);
+        setMdp(mdp);
+    }
+
     public User(String email, String mdp){
         setEmail(email);
         setMdp(mdp);

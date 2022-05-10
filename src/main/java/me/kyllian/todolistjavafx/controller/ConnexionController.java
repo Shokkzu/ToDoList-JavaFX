@@ -29,7 +29,7 @@ public class ConnexionController {
         ResultSet monResultat = user.connexion(bdd);
         if (monResultat.next()){
             errorText.setText("");
-            User currentUser = new User(monResultat.getString("nom"),monResultat.getString("prenom"),monResultat.getString("email"),monResultat.getString("mdp"));
+            User currentUser = new User(monResultat.getInt("id_compte"),monResultat.getString("nom"),monResultat.getString("prenom"),monResultat.getString("email"),monResultat.getString("mdp"));
             StartApplication.changeScene("/me/kyllian/todolistjavafx/liste", new ListeController(currentUser));
         }else{
             errorText.setText("Mauvais Mail/Mot de passe");
