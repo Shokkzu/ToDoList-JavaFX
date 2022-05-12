@@ -65,6 +65,10 @@ public class User {
         req.executeUpdate();
     }
 
+    public String toString(){
+        return getNom()+" "+getPrenom();
+    }
+
     public int getId_compte() {
         return id_compte;
     }

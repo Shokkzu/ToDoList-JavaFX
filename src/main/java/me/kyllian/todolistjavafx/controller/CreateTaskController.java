@@ -98,7 +98,7 @@ public class CreateTaskController implements Initializable {
 
     @FXML
     void onReturn(ActionEvent event) {
-        StartApplication.changeScene("liste", new ListeController(currentUser));
+        StartApplication.changeScene("insideliste", new InsideListeController(currentUser, checkedList));
     }
 
     @Override

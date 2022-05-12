@@ -38,6 +38,7 @@ public class Task {
         setRef_tache(ref_tache);
     }
 
+
     public Task(String libelle, String description, String difficulte, String date_debut, String date_fin, String date_butoir, int ref_type, int ref_etat, int ref_liste){
         setLibelle(libelle);
         setDescription(description);
@@ -55,7 +56,8 @@ public class Task {
         this.libelle = libelle;
     }
 
-    public Task(String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, String type, String etat, String nomgerant, String prenomgerant) {
+    public Task(int id_tache, String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, String type, String etat, String nomgerant, String prenomgerant) {
+        this.id_tache = id_tache;
         this.libelle = nom;
         this.description= description;
         this.difficulte = difficulte;
@@ -67,8 +69,6 @@ public class Task {
         this.nomgerant = nomgerant;
         this.prenomgerant = prenomgerant;
     }
-
-
 
     public Task(int ref_liste) {
         this.ref_liste = ref_liste;
@@ -83,6 +83,8 @@ public class Task {
         this.date_butoir = date_butoir;
         this.ref_liste = ref_liste;
     }
+
+
 
     public void Ajout_tache(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("INSERT INTO tache(libelle,description, difficulte, date_debut, date_fin,date_butoir) VALUES (?,?,?,?,?,?)");
@@ -101,7 +103,7 @@ public class Task {
         req.setInt(1,ref_liste);
         ResultSet monResultat = req.executeQuery();
         while (monResultat.next()){
-            Task maTache = new Task(monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
+            Task maTache = new Task(monResultat.getInt("id_tache"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
             mesTaches.add(maTache);
         }
         return mesTaches;
@@ -112,41 +114,16 @@ public class Task {
         PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT * FROM infotache");
         ResultSet monResultat = maRequete.executeQuery();
         while (monResultat.next()){
-            Task maListe = new Task(monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
+            Task maListe = new Task(monResultat.getInt("id_tache"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
             mesListes.add(maListe);
         }
         return mesListes;
     }
 
     public void delete(BDD bdd) throws SQLException {
-        PreparedStatement maRequete = bdd.getConnection().prepareStatement("DELETE FROM tache WHERE id_tache=?");
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("DELETE FROM tache WHERE id_tache = ?");
         maRequete.setInt(1,this.id_tache);
         maRequete.executeUpdate();
-    }
-
-    public void rechercheTache(BDD BDD, String filtre, String terme) throws SQLException{
-        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM tache WHERE "+filtre+" LIKE ? ");
-        req.setString(1,"%"+terme+"%");
-        System.out.println(filtre);
-        System.out.println(terme);
-        ResultSet monResultat = req.executeQuery();
-        while (monResultat.next()){
-            System.out.println("\n--------App Todo-List--------");
-            System.out.println("1.libelle : "+monResultat.getString("libelle"));
-            System.out.println("2.description : "+monResultat.getString("description"));
-            System.out.println("3.difficulte : "+ monResultat.getInt("difficulte"));
-            System.out.println("4.date_debut : "+monResultat.getString("date_debut"));
-            System.out.println("5.date_fin : "+monResultat.getString("date_fin"));
-            System.out.println("6.date_butoir : "+monResultat.getString("date_butoir"));
-            setId_tache(monResultat.getInt(1));
-            setLibelle(monResultat.getString(2));
-            setDescription(monResultat.getString(3));
-            setDifficulte(monResultat.getString(4));
-            setDate_debut(monResultat.getString(5));
-            setDate_fin(monResultat.getString(6));
-            setDate_butoir(monResultat.getString(7));
-        }
-        System.out.println("Fin du filtrage");
     }
 
     public void create(BDD bdd, User currentUser) throws SQLException{

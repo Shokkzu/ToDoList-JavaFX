@@ -81,7 +81,8 @@ public class InsideListeController implements Initializable {
 
     @FXML
     void onDelete(ActionEvent event) throws SQLException {
-        new Task(selectedTask.getIdTache(), selectedTask.getLibelle()).delete(new BDD());
+
+        selectedTask.delete(new BDD());
         tableTask.getItems().clear();
         tableTask.getItems().addAll(selectedTask.specificRead(new BDD()));
         modifyTask.setDisable(true);
@@ -101,6 +102,8 @@ public class InsideListeController implements Initializable {
     @FXML
     void onRowClick(MouseEvent event){
         selectedTask =tableTask.getSelectionModel().getSelectedItem();
+        System.out.println(selectedTask.getIdTache());
+        System.out.println(selectedTask.toString());
         if (selectedTask != null){
             modifyTask.setDisable(false);
             deleteTask.setDisable(false);
@@ -113,6 +116,8 @@ public class InsideListeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Task task = new Task(checkedList.getIdListe());
+        titreListe.setText(checkedList.getTitre());
+        connected.setText("Connecté en tant que "+currentUser.toString());
         taskDesciption.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
         taskDifficulty.setCellValueFactory(new PropertyValueFactory<Task, String>("difficulte"));
         taskEtat.setCellValueFactory(new PropertyValueFactory<Task, String>("etat"));

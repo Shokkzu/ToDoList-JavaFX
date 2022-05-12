@@ -87,11 +87,11 @@ public class ListeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        connected.setText("Connecté en tant que "+currentUser.getNom()+" "+currentUser.getPrenom());
+        connected.setText("Connecté en tant que "+currentUser.toString());
         listName.setCellValueFactory(new PropertyValueFactory<List, String>("titre"));
         listTaskCount.setCellValueFactory(new PropertyValueFactory<List, Integer>("tacheTotal"));
         try {
-            tableList.getItems().addAll(new List(0,"",0).readAll(new BDD()));
+            tableList.getItems().addAll(new List(0,"",0).specificRead(currentUser, new BDD()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

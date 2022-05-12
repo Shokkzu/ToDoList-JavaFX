@@ -37,7 +37,7 @@ public class CreateListController {
             errorText.setText("Veuillez rentrez un nom");
         }else{
             List newList = new List(listNameField.getText());
-            newList.create(new BDD());
+            newList.create(new BDD(), currentUser);
             StartApplication.changeScene("liste", new ListeController(currentUser));
         }
     }
