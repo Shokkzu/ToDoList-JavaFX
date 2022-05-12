@@ -20,8 +20,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class InsideListeController implements Initializable {
-    private User currentUser;
-    private List checkedList;
+    private final User currentUser;
+    private final List checkedList;
     private Task selectedTask;
 
     @FXML
@@ -83,7 +83,7 @@ public class InsideListeController implements Initializable {
     void onDelete(ActionEvent event) throws SQLException {
         new Task(selectedTask.getIdTache(), selectedTask.getLibelle()).delete(new BDD());
         tableTask.getItems().clear();
-        tableTask.getItems().addAll(selectedTask.readAll(new BDD()));
+        tableTask.getItems().addAll(selectedTask.specificRead(new BDD()));
         modifyTask.setDisable(true);
         deleteTask.setDisable(true);
     }

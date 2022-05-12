@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
@@ -33,25 +35,15 @@
          </VBox.margin>
       </TextField>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Début :" />
-      <TextField fx:id="ddebField" prefHeight="25.0" prefWidth="378.0">
-         <VBox.margin>
-            <Insets left="50.0" right="50.0" />
-         </VBox.margin>
-      </TextField>
+      <DatePicker fx:id="ddebField" />
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Fin :" />
-      <TextField fx:id="dfinField" prefHeight="25.0" prefWidth="378.0">
-         <VBox.margin>
-            <Insets left="50.0" right="50.0" />
-         </VBox.margin>
-      </TextField>
+      <DatePicker fx:id="dfinField" />
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="868.0" text="Date Butoir :" />
-      <TextField fx:id="dbutField" prefHeight="25.0" prefWidth="378.0">
-         <VBox.margin>
-            <Insets left="50.0" right="50.0" />
-         </VBox.margin>
-      </TextField>
+      <DatePicker fx:id="dbutField" />
         <Label fx:id="errorText" prefHeight="17.0" prefWidth="104.0" textFill="RED" />
-        <Button  fx:id="createList" onAction="#onCreative" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"  text="Créer la tâche">
+      <ComboBox fx:id="typeField" prefWidth="150.0" promptText="Type" />
+      <ComboBox fx:id="etatField" prefWidth="150.0" promptText="Etat" />
+        <Button fx:id="createList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCreative" text="Créer la tâche">
             <VBox.margin>
                 <Insets left="1.0" right="1.0" top="5.0" />
             </VBox.margin>

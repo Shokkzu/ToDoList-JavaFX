@@ -33,7 +33,7 @@ public class User {
     }
 
     public void inscription(BDD bdd) throws SQLException {
-        bdd.getConnection().prepareStatement("ALTER TABLE user AUTO_INCREMENT = 1;").executeUpdate();
+        bdd.getConnection().prepareStatement("ALTER TABLE compte AUTO_INCREMENT = 1;").executeUpdate();
         PreparedStatement req = bdd.getConnection().prepareStatement("INSERT INTO compte(nom, prenom, email, mdp) VALUES (?,?,?,?)");
         req.setString(1,nom);
         req.setString(2,prenom);

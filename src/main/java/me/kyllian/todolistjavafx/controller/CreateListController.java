@@ -13,7 +13,7 @@ import me.kyllian.todolistjavafx.modele.User;
 import java.sql.SQLException;
 
 public class CreateListController {
-    private User currentUser;
+    private final User currentUser;
 
     @FXML
     private Button createList;

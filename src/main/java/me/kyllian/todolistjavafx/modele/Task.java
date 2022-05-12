@@ -38,6 +38,18 @@ public class Task {
         setRef_tache(ref_tache);
     }
 
+    public Task(String libelle, String description, String difficulte, String date_debut, String date_fin, String date_butoir, int ref_type, int ref_etat, int ref_liste){
+        setLibelle(libelle);
+        setDescription(description);
+        setDifficulte(difficulte);
+        setDate_debut(date_debut);
+        setDate_fin(date_fin);
+        setDate_butoir(date_butoir);
+        setRef_etat(ref_etat);
+        setRef_type(ref_type);
+        setRef_Liste(ref_liste);
+    }
+
     public Task(int id_tache,String libelle){
         this.id_tache = id_tache;
         this.libelle = libelle;
@@ -107,7 +119,7 @@ public class Task {
     }
 
     public void delete(BDD bdd) throws SQLException {
-        PreparedStatement maRequete = bdd.getConnection().prepareStatement("DELETE FROM liste WHERE id_liste=?");
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("DELETE FROM tache WHERE id_tache=?");
         maRequete.setInt(1,this.id_tache);
         maRequete.executeUpdate();
     }
@@ -138,14 +150,16 @@ public class Task {
     }
 
     public void create(BDD bdd, User currentUser) throws SQLException{
-        PreparedStatement maRequete = bdd.getConnection().prepareStatement("INSERT INTO tache(libelle,description,difficulte,date_debut,date_fin,date_butoir,ref_liste) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("INSERT INTO tache(libelle,description,difficulte,date_debut,date_fin,date_butoir,ref_type,ref_etat,ref_liste) VALUES (?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         maRequete.setString(1, this.libelle);
         maRequete.setString(2, this.description);
         maRequete.setString(3, this.difficulte);
         maRequete.setString(4, this.date_debut);
         maRequete.setString(5, this.date_fin);
         maRequete.setString(6, this.date_butoir);
-        maRequete.setInt(7, this.ref_liste);
+        maRequete.setInt(7, this.ref_type);
+        maRequete.setInt(8, this.ref_etat);
+        maRequete.setInt(9, this.ref_liste);
         maRequete.executeUpdate();
         ResultSet resultat = maRequete.getGeneratedKeys();
         if (resultat.next()){
@@ -195,6 +209,9 @@ public class Task {
         return id_tache;
     }
 
+    public void setRef_Liste(int ref_liste){
+        this.ref_liste = ref_liste;
+    }
     public int getRefCompte() {
         return ref_compte;
     }
@@ -203,7 +220,7 @@ public class Task {
         return ref_etat;
     }
 
-    public int getRefTiste() {
+    public int getRef_liste() {
         return ref_liste;
     }
 
@@ -253,5 +270,13 @@ public class Task {
 
     public String getType() {
         return type;
+    }
+
+    public void setRef_type(int ref_type) {
+        this.ref_type = ref_type;
+    }
+
+    public void setRef_etat(int ref_etat) {
+        this.ref_etat = ref_etat;
     }
 }

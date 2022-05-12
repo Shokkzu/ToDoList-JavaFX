@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ListeController implements Initializable {
-    private User currentUser;
+    private final User currentUser;
     private List selectedList;
 
     @FXML
