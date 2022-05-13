@@ -81,12 +81,17 @@ public class InsideListeController implements Initializable {
 
     @FXML
     void onDelete(ActionEvent event) throws SQLException {
-
         selectedTask.delete(new BDD());
         tableTask.getItems().clear();
-        tableTask.getItems().addAll(selectedTask.specificRead(new BDD()));
-        modifyTask.setDisable(true);
-        deleteTask.setDisable(true);
+        System.out.println(selectedTask.getRef_liste());
+        System.out.println(selectedTask.specificRead(new BDD()).size());
+        if (selectedTask.specificRead(new BDD()).size()<=0){
+            StartApplication.changeScene("liste", new ListeController(currentUser));
+        }else{
+            tableTask.getItems().addAll(selectedTask.specificRead(new BDD()));
+            modifyTask.setDisable(true);
+            deleteTask.setDisable(true);
+        }
     }
 
     @FXML
@@ -103,6 +108,7 @@ public class InsideListeController implements Initializable {
     void onRowClick(MouseEvent event){
         selectedTask =tableTask.getSelectionModel().getSelectedItem();
         System.out.println(selectedTask.getIdTache());
+        System.out.println(selectedTask.getRef_liste());
         System.out.println(selectedTask.toString());
         if (selectedTask != null){
             modifyTask.setDisable(false);

@@ -70,6 +70,21 @@ public class Task {
         this.prenomgerant = prenomgerant;
     }
 
+    public Task(int id_tache,int ref_liste, String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, String type, String etat, String nomgerant, String prenomgerant) {
+        this.id_tache = id_tache;
+        this.ref_liste = ref_liste;
+        this.libelle = nom;
+        this.description= description;
+        this.difficulte = difficulte;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.date_butoir = date_butoir;
+        this.type = type;
+        this.etat = etat;
+        this.nomgerant = nomgerant;
+        this.prenomgerant = prenomgerant;
+    }
+
     public Task(int ref_liste) {
         this.ref_liste = ref_liste;
     }
@@ -103,7 +118,7 @@ public class Task {
         req.setInt(1,ref_liste);
         ResultSet monResultat = req.executeQuery();
         while (monResultat.next()){
-            Task maTache = new Task(monResultat.getInt("id_tache"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
+            Task maTache = new Task(monResultat.getInt("id_tache"),monResultat.getInt("ref_liste"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
             mesTaches.add(maTache);
         }
         return mesTaches;
