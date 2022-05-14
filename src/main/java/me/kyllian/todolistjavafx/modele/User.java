@@ -4,6 +4,7 @@ import me.kyllian.todolistjavafx.modele.BDD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class User {
     private int id_compte;
@@ -11,6 +12,14 @@ public class User {
     private String prenom;
     private String email;
     private String mdp;
+
+    public User(int id,String nom, String prenom, String email) throws SQLException {
+        setId_compte(id);
+        setNom(nom);
+        setPrenom(prenom);
+        setEmail(email);
+    }
+
 
     public User(String nom, String prenom, String email, String mdp) throws SQLException {
         setNom(nom);
@@ -30,6 +39,12 @@ public class User {
     public User(String email, String mdp){
         setEmail(email);
         setMdp(mdp);
+    }
+
+    public User(String nom, String prenom, String mail) {
+        setNom(nom);
+        setPrenom(prenom);
+        setEmail(email);
     }
 
     public void inscription(BDD bdd) throws SQLException {
@@ -65,6 +80,17 @@ public class User {
         req.executeUpdate();
     }
 
+    public ArrayList<User> readAll(BDD bdd) throws SQLException{
+        ArrayList<User> mesComptes = new ArrayList<>();
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT * FROM compte");
+        ResultSet monResultat = maRequete.executeQuery();
+        while (monResultat.next()){
+            User monCompte = new User(monResultat.getInt("id_compte"),monResultat.getString("nom"),monResultat.getString("prenom"),monResultat.getString("email"));
+            mesComptes.add(monCompte);
+        }
+        return mesComptes;
+    }
+
     public String toString(){
         return getNom()+" "+getPrenom();
     }
@@ -96,7 +122,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }

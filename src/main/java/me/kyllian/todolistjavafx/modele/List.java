@@ -37,7 +37,7 @@ public class List {
 
     public ArrayList<List> specificRead(User currentUser,BDD bdd) throws SQLException{
         ArrayList<List> mesListes = new ArrayList<>();
-        PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT id_liste,titre,COUNT(tache.ref_liste) as tacheTotal FROM liste, gere, tache WHERE gere.ref_compte = ? AND id_tache = gere.ref_tache AND id_liste = tache.ref_liste");
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT id_liste,titre,COUNT(tache.ref_liste) as tacheTotal FROM liste, gere, tache WHERE gere.ref_compte = ? AND id_tache = gere.ref_tache AND id_liste = tache.ref_liste AND gere.accepte = 1");
         maRequete.setInt(1, currentUser.getId_compte());
         ResultSet maReponse = maRequete.executeQuery();
         while (maReponse.next()){

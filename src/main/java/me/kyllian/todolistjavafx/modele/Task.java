@@ -1,5 +1,8 @@
 package me.kyllian.todolistjavafx.modele;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +17,7 @@ public class Task {
     private String date_debut;
     private String date_fin;
     private String date_butoir;
+    private boolean accepte;
     private int ref_type;
     private int ref_etat;
     private int ref_compte;
@@ -23,6 +27,7 @@ public class Task {
     private String etat;
     private String nomgerant;
     private String prenomgerant;
+    private String listName;
 
     public Task(String libelle, String description, String difficulte, String date_debut, String date_fin, String date_butoir) throws SQLException {
         setLibelle(libelle);
@@ -99,7 +104,36 @@ public class Task {
         this.ref_liste = ref_liste;
     }
 
+    public Task(String nomListe, int id_tache, String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, String type, String etat, String nomgerant, String prenomgerant) {
+        this.listName = nomListe;
+        this.id_tache = id_tache;
+        this.libelle = nom;
+        this.description= description;
+        this.difficulte = difficulte;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.date_butoir = date_butoir;
+        this.type = type;
+        this.etat = etat;
+        this.nomgerant = nomgerant;
+        this.prenomgerant = prenomgerant;
+    }
 
+    public Task(String nomListe, int id_tache,boolean accepte, String nom, String description, String difficulte, String date_debut, String date_fin, String date_butoir, String type, String etat, String nomgerant, String prenomgerant) {
+        this.listName = nomListe;
+        this.id_tache = id_tache;
+        this.accepte = accepte;
+        this.libelle = nom;
+        this.description= description;
+        this.difficulte = difficulte;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.date_butoir = date_butoir;
+        this.type = type;
+        this.etat = etat;
+        this.nomgerant = nomgerant;
+        this.prenomgerant = prenomgerant;
+    }
 
     public void Ajout_tache(BDD BDD) throws SQLException {
         PreparedStatement req = BDD.getConnection().prepareStatement("INSERT INTO tache(libelle,description, difficulte, date_debut, date_fin,date_butoir) VALUES (?,?,?,?,?,?)");
@@ -112,10 +146,11 @@ public class Task {
         req.executeUpdate();
     }
 
-    public ArrayList<Task> specificRead(BDD BDD) throws SQLException {
+    public ArrayList<Task> specificRead(BDD BDD, User currentUser) throws SQLException {
         ArrayList<Task> mesTaches = new ArrayList<>();
-        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM infotache WHERE ref_liste = ?");
-        req.setInt(1,ref_liste);
+        PreparedStatement req = BDD.getConnection().prepareStatement("SELECT * FROM infotache WHERE ref_compte = ? AND ref_liste = ? AND accepte = 1");
+        req.setInt(1, currentUser.getId_compte());
+        req.setInt(2,ref_liste);
         ResultSet monResultat = req.executeQuery();
         while (monResultat.next()){
             Task maTache = new Task(monResultat.getInt("id_tache"),monResultat.getInt("ref_liste"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
@@ -159,6 +194,18 @@ public class Task {
             Gere newGere = new Gere(currentUser.getId_compte(), id);
             newGere.createur(bdd);
         }
+    }
+
+    public ArrayList<Task> readGere(BDD bdd, User currentUser) throws SQLException {
+        ArrayList<Task> mesTaches = new ArrayList<>();
+        PreparedStatement maRequete = bdd.getConnection().prepareStatement("SELECT * FROM infotache WHERE ref_compte = ? AND accepte = 0");
+        maRequete.setInt(1, currentUser.getId_compte());
+        ResultSet monResultat = maRequete.executeQuery();
+        while (monResultat.next()){
+            Task maListe = new Task(monResultat.getString("nomListe"),monResultat.getInt("id_tache"),monResultat.getBoolean("accepte"),monResultat.getString("nom"),monResultat.getString("description"),monResultat.getString("difficulte"),monResultat.getString("date_debut"),monResultat.getString("date_fin"),monResultat.getString("date_butoir"),monResultat.getString("type"),monResultat.getString("etat"),monResultat.getString("nomgerant"),monResultat.getString("prenomgerant"));
+            mesTaches.add(maListe);
+        }
+        return mesTaches;
     }
 
     public void setId_tache(int id_tache) {
@@ -270,5 +317,9 @@ public class Task {
 
     public void setRef_etat(int ref_etat) {
         this.ref_etat = ref_etat;
+    }
+
+    public String getListName() {
+        return listName;
     }
 }

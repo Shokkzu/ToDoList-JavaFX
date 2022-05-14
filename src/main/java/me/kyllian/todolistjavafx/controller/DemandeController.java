@@ -10,45 +10,37 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import me.kyllian.todolistjavafx.StartApplication;
-import me.kyllian.todolistjavafx.modele.BDD;
-import me.kyllian.todolistjavafx.modele.List;
-import me.kyllian.todolistjavafx.modele.Task;
-import me.kyllian.todolistjavafx.modele.User;
+import me.kyllian.todolistjavafx.modele.*;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class InsideListeController implements Initializable {
+public class DemandeController implements Initializable {
     private final User currentUser;
-    private final List checkedList;
     private Task selectedTask;
 
     @FXML
     private Label connected;
 
     @FXML
-    private Button createList;
+    private Button acceptTask;
 
     @FXML
-    private Button deleteTask;
-
-    @FXML
-    private Button modifyTask;
-
-    @FXML
-    private Button inviteUser;
+    private Button refuseTask;
 
     @FXML
     private Button retour;
 
-    public InsideListeController(User currentUser, List checkedList){
+    public DemandeController(User currentUser){
         this.currentUser = currentUser;
-        this.checkedList = checkedList;
     }
 
     @FXML
     private TableView<Task> tableTask;
+
+    @FXML
+    private TableColumn<Task, String> listName;
 
     @FXML
     private TableColumn<Task, String> taskDesciption;
@@ -78,24 +70,23 @@ public class InsideListeController implements Initializable {
     private Label titreListe;
 
     @FXML
-    void onCreate(ActionEvent event) {
-        StartApplication.changeScene("createTask",new CreateTaskController(checkedList,currentUser));
+    void onAccept(ActionEvent event) throws SQLException {
+        Gere gere = new Gere(currentUser.getId_compte(), selectedTask.getIdTache());
+        gere.accept(new BDD());
+        tableTask.getItems().clear();
+        tableTask.getItems().addAll(selectedTask.readGere(new BDD(), currentUser));
+        acceptTask.setDisable(true);
+        refuseTask.setDisable(true);
     }
 
     @FXML
-    void onDelete(ActionEvent event) throws SQLException {
-        selectedTask.delete(new BDD());
+    void onRefuse(ActionEvent event) throws SQLException {
+        Gere gere = new Gere(currentUser.getId_compte(), selectedTask.getIdTache());
+        gere.refus(new BDD());
         tableTask.getItems().clear();
-        System.out.println(selectedTask.getRef_liste());
-        System.out.println(selectedTask.specificRead(new BDD(),currentUser).size());
-        if (selectedTask.specificRead(new BDD(),currentUser).size()<=0){
-            StartApplication.changeScene("liste", new ListeController(currentUser));
-        }else{
-            tableTask.getItems().addAll(selectedTask.specificRead(new BDD(),currentUser));
-            modifyTask.setDisable(true);
-            deleteTask.setDisable(true);
-            inviteUser.setDisable(true);
-        }
+        tableTask.getItems().addAll(selectedTask.readGere(new BDD(), currentUser));
+        acceptTask.setDisable(true);
+        refuseTask.setDisable(true);
     }
 
     @FXML
@@ -109,32 +100,24 @@ public class InsideListeController implements Initializable {
     }
 
     @FXML
-    void onInvite(ActionEvent event){
-        StartApplication.changeScene("userList", new UserListController(currentUser, selectedTask));
-    }
-
-    @FXML
     void onRowClick(MouseEvent event){
         selectedTask =tableTask.getSelectionModel().getSelectedItem();
         System.out.println(selectedTask.getIdTache());
         System.out.println(selectedTask.getRef_liste());
         System.out.println(selectedTask.toString());
         if (selectedTask != null){
-            modifyTask.setDisable(false);
-            deleteTask.setDisable(false);
-            inviteUser.setDisable(false);
+            acceptTask.setDisable(false);
+            refuseTask.setDisable(false);
         }else{
-            modifyTask.setDisable(true);
-            deleteTask.setDisable(true);
-            inviteUser.setDisable(true);
+            acceptTask.setDisable(true);
+            refuseTask.setDisable(true);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Task task = new Task(checkedList.getIdListe());
-        titreListe.setText(checkedList.getTitre());
         connected.setText("Connecté en tant que "+currentUser.toString());
+        listName.setCellValueFactory(new PropertyValueFactory<Task, String>("listName"));
         taskDesciption.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
         taskDifficulty.setCellValueFactory(new PropertyValueFactory<Task, String>("difficulte"));
         taskEtat.setCellValueFactory(new PropertyValueFactory<Task, String>("etat"));
@@ -143,13 +126,13 @@ public class InsideListeController implements Initializable {
         dateButoir.setCellValueFactory(new PropertyValueFactory<Task, String>("dateButoir"));
         dateDebut.setCellValueFactory(new PropertyValueFactory<Task, String>("dateDebut"));
         dateFin.setCellValueFactory(new PropertyValueFactory<Task, String>("dateFin"));
+        Task task = new Task(0);
         try {
-            tableTask.getItems().addAll(task.specificRead(new BDD(),currentUser));
+            tableTask.getItems().addAll(task.readGere(new BDD(), currentUser));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        modifyTask.setDisable(true);
-        deleteTask.setDisable(true);
-        inviteUser.setDisable(true);
+        acceptTask.setDisable(true);
+        refuseTask.setDisable(true);
     }
 }

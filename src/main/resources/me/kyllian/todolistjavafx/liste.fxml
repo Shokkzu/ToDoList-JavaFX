@@ -9,17 +9,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="15.0" prefWidth="600.0">
          <children>
-            <Button fx:id="disconnect" mnemonicParsing="false" onAction="#onDisconnect" prefHeight="25.0" prefWidth="100.0" text="Déconnexion">
+            <Button fx:id="disconnect" mnemonicParsing="false" onAction="#onDisconnect" prefHeight="25.0" prefWidth="114.0" text="Déconnexion">
                <HBox.margin>
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Label fx:id="connected" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="486.0" text="Connecté en tant que ---">
+            <Button fx:id="demandeTache" disable="true" mnemonicParsing="false" onAction="#onDemande" prefHeight="25.0" prefWidth="156.0" text="Demande de taĉhes : 0">
+               <HBox.margin>
+                  <Insets left="100.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Label fx:id="connected" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="180.0" text="Connecté en tant que ---">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

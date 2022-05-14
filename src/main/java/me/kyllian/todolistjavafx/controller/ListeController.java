@@ -10,10 +10,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import me.kyllian.todolistjavafx.StartApplication;
 import me.kyllian.todolistjavafx.modele.BDD;
+import me.kyllian.todolistjavafx.modele.Gere;
 import me.kyllian.todolistjavafx.modele.List;
 import me.kyllian.todolistjavafx.modele.User;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -44,6 +46,9 @@ public class ListeController implements Initializable {
 
     @FXML
     private TableView<List> tableList;
+
+    @FXML
+    private Button demandeTache;
 
     public ListeController(User currentUser){
         this.currentUser = currentUser;
@@ -85,13 +90,24 @@ public class ListeController implements Initializable {
         StartApplication.changeScene("connexion");
     }
 
+    @FXML
+    void onDemande(ActionEvent event){
+        StartApplication.changeScene("demande", new DemandeController(currentUser));
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         connected.setText("Connecté en tant que "+currentUser.toString());
         listName.setCellValueFactory(new PropertyValueFactory<List, String>("titre"));
         listTaskCount.setCellValueFactory(new PropertyValueFactory<List, Integer>("tacheTotal"));
+
         try {
             tableList.getItems().addAll(new List(0,"",0).specificRead(currentUser, new BDD()));
+            int compte = new Gere(0,0).compte(new BDD(),currentUser);
+            demandeTache.setText("Demande de tâches : " + compte);
+            if (compte > 0){
+                demandeTache.setDisable(false);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

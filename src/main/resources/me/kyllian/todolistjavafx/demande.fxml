@@ -25,29 +25,28 @@
                 </Label>
             </children>
         </HBox>
-        <Label fx:id="titreListe" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="1106.0" text="titreListe" textAlignment="CENTER">
+        <Label fx:id="titreListe" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="1106.0" text="Demande de tache" textAlignment="CENTER">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
         <TableView fx:id="tableTask" onMouseClicked="#onRowClick" prefHeight="468.0" prefWidth="867.0">
             <columns>
-                <TableColumn fx:id="taskName" prefWidth="149.0" text="Nom" />
-                <TableColumn fx:id="taskDesciption" minWidth="0.0" prefWidth="278.0" text="Description" />
-            <TableColumn fx:id="taskDifficulty" prefWidth="101.0" text="Difficulté" />
-            <TableColumn fx:id="dateDebut" prefWidth="91.0" text="Date Début" />
-            <TableColumn fx:id="dateFin" prefWidth="87.0" text="Date Fin" />
-            <TableColumn fx:id="dateButoir" prefWidth="112.0" text="Date Butoir" />
-            <TableColumn fx:id="taskType" minWidth="0.0" prefWidth="70.0" text="Type" />
-            <TableColumn fx:id="taskEtat" minWidth="0.0" prefWidth="63.0" text="État" />
+            <TableColumn fx:id="listName" prefWidth="104.0" text="Liste" />
+                <TableColumn fx:id="taskName" prefWidth="108.0" text="Nom" />
+                <TableColumn fx:id="taskDesciption" minWidth="0.0" prefWidth="244.0" text="Description" />
+                <TableColumn fx:id="taskDifficulty" prefWidth="105.0" text="Difficulté" />
+                <TableColumn fx:id="dateDebut" prefWidth="91.0" text="Date Début" />
+                <TableColumn fx:id="dateFin" prefWidth="89.0" text="Date Fin" />
+                <TableColumn fx:id="dateButoir" text="Date Butoir" />
+                <TableColumn fx:id="taskType" minWidth="0.0" prefWidth="62.0" text="Type" />
+                <TableColumn fx:id="taskEtat" minWidth="0.0" prefWidth="68.0" text="État" />
             </columns>
         </TableView>
         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="804.0" spacing="50.0">
             <children>
-                <Button fx:id="createList" mnemonicParsing="false" onAction="#onCreate" prefHeight="25.0" prefWidth="138.0" text="Ajouter une tâche" />
-                <Button fx:id="modifyTask" mnemonicParsing="false" onAction="#onModify" prefHeight="25.0" prefWidth="143.0" text="Modifier une tâche" />
-                <Button fx:id="deleteTask" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="155.0" text="Supprimer une tâche" />
-            <Button fx:id="inviteUser" mnemonicParsing="false" onAction="#onInvite" prefHeight="25.0" prefWidth="155.0" text="Inviter un utilisateur" />
+                <Button fx:id="acceptTask" mnemonicParsing="false" onAction="#onAccept" prefHeight="25.0" prefWidth="138.0" text="Accepter la tâche" />
+                <Button fx:id="refuseTask" mnemonicParsing="false" onAction="#onRefuse" prefHeight="25.0" prefWidth="155.0" text="Refuser la tâche" />
             </children>
         </HBox>
     </children>
